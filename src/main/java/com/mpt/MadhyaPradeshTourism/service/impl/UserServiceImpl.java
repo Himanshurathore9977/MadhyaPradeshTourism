@@ -82,5 +82,13 @@ public class UserServiceImpl implements UserService {
             User updatedUser = userRepository.save(existingUser);
             UserResponse userResponse = modelMapper.map(updatedUser, UserResponse.class);
             return Response.successfulResponse("User Updated Successfully", userResponse);
-        }
+    }
+
+    @Override
+    public Response<UserResponse> deleteUser(Long userID) {
+        var user = userRepository.findById(userID).orElseThrow(() -> new MPTApplicationExceptions("User not found with id"+ userID));
+        user.setActiveUser(false);
+        userRepository.save(user) ;
+        return Response.successfulResponse("User Delete Successfully ");
+    }
 }

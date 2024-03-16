@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserApiController {
+public class UserController {
 
     private final UserService userService;
 
@@ -41,5 +41,10 @@ public class UserApiController {
     public ResponseEntity<Response<UserResponse>> createUser(@RequestBody UserCreateRequest userCreateRequest ){
         var response = userService.createUser(userCreateRequest);
         return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+    @DeleteMapping
+    public ResponseEntity<Response<UserResponse>> deleteUser(@PathVariable Long userID){
+        var response = userService.deleteUser(userID) ;
+        return ResponseEntity.status(response.getStatusCode()).body(response) ;
     }
 }
